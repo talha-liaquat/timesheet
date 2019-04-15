@@ -1,0 +1,70 @@
+<h1>Worklog</h1>
+
+<div class="table">
+  <label>Select Employee: </label>
+  <select (change)="loadEmployee($event.target.value)">        
+      <option *ngFor="let emp of employees" value={{emp.id}} [attr.selected]="emp.id == this.employeeId ? true : null">
+          {{emp.name}}
+      </option>
+  </select>
+</div>
+
+<table class="weekHeader">
+  <td></td>
+  <td>
+      <a (click)="weekNavigate(-1)" class="navigationArrow">&lt;</a>
+      Week {{week}}
+      <a (click)="weekNavigate(+1)" class="navigationArrow">&gt;</a>
+  </td>
+  <td class="right">
+      <button *ngIf="!show" class="button" (click)="this.logWork()" title="Add worklog">+</button>
+  </td>
+</table>
+
+<table *ngIf="show" class="table">
+      <tr><td>Select Task:</td>
+          <td><select [(ngModel)]="this.worklogRequest.taskId" required>        
+              <option *ngFor="let task of tasks" value={{task.id}}>
+                  {{task.name}}
+              </option>
+          </select></td></tr>
+      <tr><td>Date:</td><td>
+          <input type="date" id="start" name="trip-start"
+          min="{{startDate | date: 'yyyy-MM-dd'}}" max="{{endDate | date: 'yyyy-MM-dd'}}" [(ngModel)]="this.worklogRequest.date">
+          </td></tr>
+      <tr><td>Hours</td>
+      <td>
+        <input  type="number" [(ngModel)]="this.worklogRequest.hours" min="1" max="24" maxlength="2"> hour(s)</td>
+      </tr>
+      <tr><td colspan="2">&nbsp;</td></tr>
+</table>
+
+
+<table class="table">
+    <tr>
+        <th>Task Name</th>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+    </tr>
+    <tr *ngFor="let item of worklogs">
+        <td>{{item.taskName}}</td>
+        <td>{{item.sunday}}</td>
+        <td>{{item.monday}}</td>
+        <td>{{item.tuesday}}</td>
+        <td>{{item.wednesday}}</td>
+        <td>{{item.thursday}}</td>
+        <td>{{item.friday}}</td>
+        <td>{{item.saturday}}</td>
+    </tr>
+</table>
+<br/>
+<div>
+  <button class="button" [routerLink]="['']" title="Navigate back to Employee list">Back to list</button>
+  &nbsp;
+  <button class="button" (click)="this.submitWorkLogs()" title="Save changes in Database">Save</button>
+</div>
