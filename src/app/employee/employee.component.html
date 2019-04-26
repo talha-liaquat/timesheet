@@ -8,7 +8,7 @@
         <th>Weekly Effort (Average)</th>
     </tr>
     <tr *ngFor="let item of employees"
-        routerLink="/worklog/{{item.id}}/16">
+        routerLink="/worklog/{{item.id}}/{{this.currentWeek}}">
         <td>{{item.id}}</td>
         <td>{{item.code}}</td>
         <td>{{item.name}}</td>
